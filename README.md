@@ -47,4 +47,5 @@ A professional graphical interface for Lineage 2 server administration. Complete
 
 ## 🖼️ Screenshots
 
-*(Add your interface screenshots here)*
+<img width="1472" height="987" alt="image" src="https://github.com/user-attachments/assets/9064765a-c10f-44af-91e5-1b5e271c3e03" />
+
