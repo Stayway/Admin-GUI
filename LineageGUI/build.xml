@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="LineageGUI" default="compile" basedir=".">  <!-- ← NOME AQUI -->
+    
+    <!-- Propriedades -->
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="bin"/>
+    <property name="dist.dir" value="dist"/>
+    <property name="lib.dir" value="lib"/>
+    <property name="main.class" value="com.lineage.gui.MainGUI"/>  <!-- ← ISSO NÃO MUDA -->
+    <property name="project.name" value="LineageGUI"/>  <!-- ← NOVO -->
+    
+    <!-- Inicialização -->
+    <target name="init">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${dist.dir}"/>
+        <echo message="================================="/>
+        <echo message=" ${project.name} - Build System"/>
+        <echo message="================================="/>
+        <tstamp>
+            <format property="build.time" pattern="yyyy-MM-dd HH:mm:ss"/>
+        </tstamp>
+    </target>
+    
+    <!-- Compilação -->
+    <target name="compile" depends="init">
+        <javac srcdir="${src.dir}" 
+               destdir="${build.dir}" 
+               classpathref="classpath"
+               source="25" 
+               target="25"
+               encoding="UTF-8"
+               debug="true"
+               includeantruntime="false">
+        </javac>
+    </target>
+    
+    <!-- JAR com dependências -->
+    <target name="jar-complete" depends="compile">
+        <jar destfile="${dist.dir}/${project.name}.jar" basedir="${build.dir}">  <!-- ← USA project.name -->
+            <manifest>
+                <attribute name="Main-Class" value="${main.class}"/>
+                <attribute name="Built-By" value="Stayway"/>
+                <attribute name="Built-Date" value="${build.time}"/>
+            </manifest>
+            <zipgroupfileset dir="${lib.dir}" includes="**/*.jar"/>
+        </jar>
+        <echo message="✅ JAR criado: ${dist.dir}/${project.name}.jar"/>
+    </target>
+    
+    <!-- Executar -->
+    <target name="run" depends="compile">
+        <java classname="${main.class}" 
+              classpath="${build.dir}:${lib.dir}/*" 
+              fork="true"/>
+    </target>
+    
+    <!-- Limpar -->
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+    </target>
+    
+</project>
